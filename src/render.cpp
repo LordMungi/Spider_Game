@@ -49,6 +49,21 @@ namespace render
 		window.display();
 	}
 
+	void circle(sf::Vector2f position, float radius, sf::Color color)
+	{
+		sf::CircleShape shape;
+
+		shape.setRadius(math::getResValueFromViewport(radius));
+
+		sf::Vector2f resPosition = math::getResPointFromViewport(position);
+		resPosition.x -= shape.getRadius();
+		resPosition.y -= shape.getRadius();
+		shape.setPosition(resPosition);
+
+		shape.setFillColor(color);
+		window.draw(shape);
+	}
+
 	void circle(sf::CircleShape circle, sf::Color color)
 	{
 		sf::CircleShape shape;

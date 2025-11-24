@@ -12,5 +12,6 @@ namespace render
 	void clear();
 	void draw();
 
+	void circle(sf::Vector2f position, float radius, sf::Color color);
 	void circle(sf::CircleShape circle, sf::Color color);
 }

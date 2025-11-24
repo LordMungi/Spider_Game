@@ -13,7 +13,7 @@ namespace game
 	{
 		clock.start();
 
-		spider = spider::init(10, { global::viewport.x / 2, global::viewport.y / 2});
+		spider = spider::init(5, { global::viewport.x / 2, 0}, 50);
 	}
 
 	Screen update()
@@ -22,10 +22,10 @@ namespace game
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)
 			|| sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
-			spider::move(spider, { -1, 0 }, delta);
+			spider::pushLeft(spider, delta);
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)
 			|| sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
-			spider::move(spider, { 1, 0 }, delta);
+			spider::pushRight(spider, delta);
 
 		return Screen::GAME;
 	}

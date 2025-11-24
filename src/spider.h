@@ -7,15 +7,20 @@ namespace spider
 	{
 		sf::CircleShape collider;
 
-		sf::Vector2f position;
+		sf::Vector2f pivotPosition;
+		float stringLength;
+		float angle;
+
 		sf::Vector2f velocity;
 
-		float speed = 100;
+		float speed = 0.0015;
 	};
 
-	Spider init(float radius, sf::Vector2f position);
+	Spider init(float radius, sf::Vector2f pivotPosition, float stringLength);
 
-	void move(Spider& spider, sf::Vector2f direction, float delta);
+	void pushRight(Spider& spider, float delta);
+	void pushLeft(Spider& spider, float delta);
+
 	void draw(Spider& spider);
 
 }
