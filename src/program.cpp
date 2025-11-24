@@ -13,8 +13,8 @@ namespace program
 	static void switchScreen();
 	static void close();
 
-	Screen currentScreen;
-	Screen previousScreen;
+	Screen currentScreen = Screen::GAME;
+	Screen previousScreen = Screen::EXIT;
 
 	bool isRunning = true;
 

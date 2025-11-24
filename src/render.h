@@ -13,4 +13,5 @@ namespace render
 	void draw();
 
 	void circle(float radius, sf::Color color);
+	void circle(sf::CircleShape circle, sf::Color color);
 }

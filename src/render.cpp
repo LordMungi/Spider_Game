@@ -45,4 +45,11 @@ namespace render
 		shape.setFillColor(color);
 		window.draw(shape);
 	}
+
+	void circle(sf::CircleShape circle, sf::Color color)
+	{
+		circle.setFillColor(color);
+		window.draw(circle);
+	}
+
 }
