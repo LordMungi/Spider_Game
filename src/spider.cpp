@@ -2,9 +2,11 @@
 
 namespace spider
 {
+	const float pi = 3.14159265359;
+
 	static void setPosFromAngle(Spider& spider);
 
-	Spider init(float radius, sf::Vector2f pivotPosition, float stringLength)
+	Spider init(float radius, sf::Vector2f pivotPosition, float maxStringLength)
 	{
 		Spider spider;
 
@@ -12,7 +14,10 @@ namespace spider
 
 		spider.pivotPosition = pivotPosition;
 		spider.angle = 0;
-		spider.stringLength = stringLength;
+
+		spider.maxStringLength = maxStringLength ;
+		spider.minStringLength = maxStringLength / 10;
+		spider.stringLength = maxStringLength / 2;
 
 		setPosFromAngle(spider);
 
@@ -23,13 +28,25 @@ namespace spider
 
 	void pushRight(Spider& spider, float delta)
 	{
-		spider.angle += spider.speed;
+		spider.angle = fmin(spider.angle + spider.speed, pi / 2);
 		setPosFromAngle(spider);
 	}
 
 	void pushLeft(Spider& spider, float delta)
 	{
-		spider.angle -= spider.speed;
+		spider.angle = fmax(spider.angle - spider.speed, -pi / 2);
+		setPosFromAngle(spider);
+	}
+
+	void lengthenString(Spider& spider, float delta)
+	{
+		spider.stringLength = fmin(spider.stringLength + spider.stringSpeed, spider.maxStringLength);
+		setPosFromAngle(spider);
+	}
+
+	void shortenString(Spider& spider, float delta)
+	{
+		spider.stringLength = fmax(spider.stringLength - spider.stringSpeed, spider.minStringLength);
 		setPosFromAngle(spider);
 	}
 
