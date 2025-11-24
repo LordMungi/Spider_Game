@@ -34,6 +34,9 @@
     <Filter Include="Program\Screens\Game\Spider">
       <UniqueIdentifier>{0c051369-00ff-4a1b-adad-5e44017f03a5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Program\Utilities\Math">
+      <UniqueIdentifier>{be8bf48a-a8d4-45dd-bf34-888cc7ee19a3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
@@ -51,6 +54,9 @@
     </ClCompile>
     <ClCompile Include="src\spider.cpp">
       <Filter>Program\Screens\Game\Spider</Filter>
+    </ClCompile>
+    <ClCompile Include="src\math.cpp">
+      <Filter>Program\Utilities\Math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -71,6 +77,9 @@
     </ClInclude>
     <ClInclude Include="src\spider.h">
       <Filter>Program\Screens\Game\Spider</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math.h">
+      <Filter>Program\Utilities\Math</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -10,7 +10,7 @@ namespace spider
 		sf::Vector2f position;
 		sf::Vector2f velocity;
 
-		float speed = 200;
+		float speed = 100;
 	};
 
 	Spider init(float radius, sf::Vector2f position);

@@ -172,6 +172,7 @@
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\global.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\math.cpp" />
     <ClCompile Include="src\program.cpp" />
     <ClCompile Include="src\render.cpp" />
     <ClCompile Include="src\spider.cpp" />
@@ -179,6 +180,7 @@
   <ItemGroup>
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\global.h" />
+    <ClInclude Include="src\math.h" />
     <ClInclude Include="src\program.h" />
     <ClInclude Include="src\render.h" />
     <ClInclude Include="src\screens.h" />

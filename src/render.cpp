@@ -1,13 +1,23 @@
 #include "render.h"
-
+#include "global.h"
+#include "math.h"
 
 namespace render
 {
 	sf::RenderWindow window;
-	
+
+	static void setViewportFromResolution();
+
 	void startWindow(sf::Vector2u resolution, std::string title)
 	{
 		window = sf::RenderWindow(sf::VideoMode(resolution), title);
+		setViewportFromResolution();
+	}
+
+	static void setViewportFromResolution()
+	{
+		global::viewport.y = 100;
+		global::viewport.x = global::resolution.x * global::viewport.y / global::resolution.y;
 	}
 
 	void updateWindow()
@@ -39,17 +49,19 @@ namespace render
 		window.display();
 	}
 
-	void circle(float radius, sf::Color color)
-	{
-		sf::CircleShape shape(radius);
-		shape.setFillColor(color);
-		window.draw(shape);
-	}
-
 	void circle(sf::CircleShape circle, sf::Color color)
 	{
-		circle.setFillColor(color);
-		window.draw(circle);
+		sf::CircleShape shape;
+				
+		shape.setRadius(math::getResValueFromViewport(circle.getRadius()));
+
+		sf::Vector2f position = math::getResPointFromViewport(circle.getPosition());
+		position.x -= shape.getRadius();
+		position.y -= shape.getRadius();
+		shape.setPosition(position);
+
+		shape.setFillColor(color);
+		window.draw(shape);
 	}
 
 }

@@ -13,16 +13,18 @@ namespace game
 	{
 		clock.start();
 
-		spider = spider::init(100, { 200, 200 });
+		spider = spider::init(10, { global::viewport.x / 2, global::viewport.y / 2});
 	}
 
 	Screen update()
 	{
 		float delta = clock.restart().asSeconds();
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)
+			|| sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
 			spider::move(spider, { -1, 0 }, delta);
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)
+			|| sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
 			spider::move(spider, { 1, 0 }, delta);
 
 		return Screen::GAME;
