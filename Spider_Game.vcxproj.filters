@@ -19,16 +19,49 @@
     <Filter Include="Program\Screens">
       <UniqueIdentifier>{1785d286-a1ca-4cda-bdcf-65942af7a872}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Program\Screens\Game">
+      <UniqueIdentifier>{ae4a8984-4f28-487d-8303-4f7e9b7568f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Utilities">
+      <UniqueIdentifier>{752a2078-61f5-4577-9827-8bf8f56f9601}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Utilities\Render">
+      <UniqueIdentifier>{4f4191be-4266-4fe7-8867-22272414ad15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Utilities\Global">
+      <UniqueIdentifier>{3e64175b-f8cb-4e00-a3c1-c58b04993ac6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\program.cpp">
       <Filter>Program</Filter>
     </ClCompile>
+    <ClCompile Include="src\global.cpp">
+      <Filter>Program\Utilities\Global</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game.cpp">
+      <Filter>Program\Screens\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\render.cpp">
+      <Filter>Program\Utilities\Render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\program.h">
       <Filter>Program</Filter>
+    </ClInclude>
+    <ClInclude Include="src\global.h">
+      <Filter>Program\Utilities\Global</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game.h">
+      <Filter>Program\Screens\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\render.h">
+      <Filter>Program\Utilities\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\screens.h">
+      <Filter>Program\Screens</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

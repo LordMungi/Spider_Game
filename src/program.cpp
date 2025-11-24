@@ -1,15 +1,20 @@
 #include "program.h"
 
-#include <SFML/Graphics.hpp>
+#include "global.h"
+#include "render.h"
+
+#include "game.h"
 
 namespace program
 {
 	static void init();
 	static void update();
 	static void draw();
+	static void switchScreen();
 	static void close();
 
-	sf::RenderWindow window;
+	Screen currentScreen;
+	Screen previousScreen;
 
 	bool isRunning = true;
 
@@ -17,10 +22,11 @@ namespace program
 	{
 		init();
 
-		while (isRunning)
+		while (render::isWindowOpen())
 		{
 			update();
 			draw();
+			switchScreen();
 		}
 
 		close();
@@ -28,31 +34,61 @@ namespace program
 
 	static void init()
 	{
-		window = sf::RenderWindow(sf::VideoMode({ 1024, 768 }), "Spider game");
+		render::startWindow(global::resolution, "Spider game");
 	}
 
 	static void update()
 	{
-		while (const std::optional event = window.pollEvent())
-		{
-			if (event->is<sf::Event::Closed>())
-				isRunning = false;
-		}
+		render::updateWindow();
 
+		switch (currentScreen)
+		{
+		case Screen::GAME:
+			currentScreen = game::update();
+			break;
+		case Screen::EXIT:
+			isRunning = false;
+			break;
+		}
 	}
 
 	static void draw()
 	{
-		sf::CircleShape shape(100.f);
-		shape.setFillColor(sf::Color::Green);
+		render::clear();
 
-		window.clear();
-	 	window.draw(shape);
-		window.display();
+		switch (currentScreen)
+		{
+		case Screen::GAME:
+			game::draw();
+			break;
+		}
+
+		render::draw();
+	}
+
+	static void switchScreen()
+	{
+		if (currentScreen != previousScreen)
+		{
+			switch (previousScreen)
+			{
+			case Screen::GAME:
+				game::end();
+				break;
+			}
+
+			switch (currentScreen)
+			{
+			case Screen::GAME:
+				game::start();
+				break;
+			}
+		}
+
+		previousScreen = currentScreen;
 	}
 
 	static void close()
 	{
-		window.close();
 	}
 }
