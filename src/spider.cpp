@@ -2,7 +2,7 @@
 
 namespace spider
 {
-	const float pi = 3.14159265359;
+	const float pi = 3.14159265359f;
 
 	static void setPosFromAngle(Spider& spider);
 
@@ -28,25 +28,25 @@ namespace spider
 
 	void pushRight(Spider& spider, float delta)
 	{
-		spider.angle = fmin(spider.angle + spider.speed, pi / 2);
+		spider.angle = fmin(spider.angle + spider.speed * delta, pi / 2);
 		setPosFromAngle(spider);
 	}
 
 	void pushLeft(Spider& spider, float delta)
 	{
-		spider.angle = fmax(spider.angle - spider.speed, -pi / 2);
+		spider.angle = fmax(spider.angle - spider.speed * delta, -pi / 2);
 		setPosFromAngle(spider);
 	}
 
 	void lengthenString(Spider& spider, float delta)
 	{
-		spider.stringLength = fmin(spider.stringLength + spider.stringSpeed, spider.maxStringLength);
+		spider.stringLength = fmin(spider.stringLength + spider.stringSpeed * delta, spider.maxStringLength);
 		setPosFromAngle(spider);
 	}
 
 	void shortenString(Spider& spider, float delta)
 	{
-		spider.stringLength = fmax(spider.stringLength - spider.stringSpeed, spider.minStringLength);
+		spider.stringLength = fmax(spider.stringLength - spider.stringSpeed * delta, spider.minStringLength);
 		setPosFromAngle(spider);
 	}
 

@@ -13,11 +13,11 @@ namespace spider
 		float stringLength;
 		float maxStringLength;
 		float minStringLength;
-		float stringSpeed = 0.05;
+		float stringSpeed = 100.0f;
 
 		sf::Vector2f velocity;
 
-		float speed = 0.0015;
+		float speed = 3.0f;
 	};
 
 	Spider init(float radius, sf::Vector2f pivotPosition, float maxStringLength);
