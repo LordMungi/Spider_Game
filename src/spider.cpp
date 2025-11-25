@@ -35,8 +35,16 @@ namespace spider
 		spider.angle += spider.velocity * delta;
 
 		spider.velocity -= spider.velocity * 0.5f * delta;
-		if (spider.angle >= pi / 2 || spider.angle <= -pi / 2)
+		if (spider.angle > pi / 2)
+		{
+			spider.angle = pi / 2;
 			spider.velocity = 0;
+		}
+		if (spider.angle < -pi / 2)
+		{
+			spider.angle = -pi / 2;
+			spider.velocity = 0;
+		}
 
 		setPosFromAngle(spider);
 	}
