@@ -95,7 +95,8 @@ namespace render
 		sf::Text label(font);
 
 		label.setString(text);
-		label.setCharacterSize(math::getResValueFromViewport(size));
+		label.setPosition(math::getResPointFromViewport(position));
+		label.setCharacterSize(static_cast<unsigned int>(math::getResValueFromViewport(size)));
 		label.setFillColor(sf::Color::White);
 
 		window.draw(label);
