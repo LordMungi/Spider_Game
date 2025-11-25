@@ -49,16 +49,30 @@ namespace render
 		window.display();
 	}
 
+	void line(sf::Vector2f start, sf::Vector2f end, float width, sf::Color color)
+	{
+		sf::RectangleShape shape;
+
+
+		shape.setOrigin({ math::getResValueFromViewport(width) / 2, 0 });
+
+		sf::Vector2f d = math::getResPointFromViewport(start - end);
+		shape.setSize({math::getResValueFromViewport(width), sqrt(d.x * d.x + d.y * d.y)});
+
+		shape.setRotation(sf::radians(atan2(d.y, d.x) + 3.14f / 2.0f));
+		shape.setPosition(math::getResPointFromViewport(start));
+		shape.setFillColor(color);
+
+		window.draw(shape);
+	}
+
 	void circle(sf::Vector2f position, float radius, sf::Color color)
 	{
 		sf::CircleShape shape;
 
 		shape.setRadius(math::getResValueFromViewport(radius));
-
-		sf::Vector2f resPosition = math::getResPointFromViewport(position);
-		resPosition.x -= shape.getRadius();
-		resPosition.y -= shape.getRadius();
-		shape.setPosition(resPosition);
+		shape.setPosition(math::getResPointFromViewport(position));
+		shape.setOrigin({ math::getResValueFromViewport(radius), math::getResValueFromViewport(radius) });
 
 		shape.setFillColor(color);
 		window.draw(shape);
@@ -69,14 +83,22 @@ namespace render
 		sf::CircleShape shape;
 				
 		shape.setRadius(math::getResValueFromViewport(circle.getRadius()));
-
-		sf::Vector2f position = math::getResPointFromViewport(circle.getPosition());
-		position.x -= shape.getRadius();
-		position.y -= shape.getRadius();
-		shape.setPosition(position);
+		shape.setPosition(math::getResPointFromViewport(circle.getPosition()));
+		shape.setOrigin({ math::getResValueFromViewport(circle.getRadius()), math::getResValueFromViewport(circle.getRadius()) });
 
 		shape.setFillColor(color);
 		window.draw(shape);
+	}
+
+	void text(std::string text, sf::Font font, sf::Vector2f position, float size)
+	{
+		sf::Text label(font);
+
+		label.setString(text);
+		label.setCharacterSize(math::getResValueFromViewport(size));
+		label.setFillColor(sf::Color::White);
+
+		window.draw(label);
 	}
 
 }

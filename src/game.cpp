@@ -9,6 +9,8 @@ namespace game
 
 	spider::Spider spider;
 
+	sf::Font font1("resource/fonts/CourierPrime-Regular.ttf");
+
 	void start()
 	{
 		clock.start();

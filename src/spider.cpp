@@ -52,6 +52,7 @@ namespace spider
 
 	void draw(Spider& spider)
 	{
+		render::line(spider.pivotPosition, spider.collider.getPosition(), 1, sf::Color::White);
 		render::circle(spider.pivotPosition, 2, sf::Color::Red);
 		render::circle(spider.collider, sf::Color::Green);
 	}

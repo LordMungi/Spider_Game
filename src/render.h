@@ -11,7 +11,11 @@ namespace render
 
 	void clear();
 	void draw();
+	
+	void line(sf::Vector2f start, sf::Vector2f end, float width, sf::Color color);
 
 	void circle(sf::Vector2f position, float radius, sf::Color color);
 	void circle(sf::CircleShape circle, sf::Color color);
+
+	void text(std::string text, sf::Font font, sf::Vector2f position, float size);
 }
