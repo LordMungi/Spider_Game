@@ -53,12 +53,12 @@ namespace game
 
 		render::text("Shorten string", font1, { 20, 2 }, 3);
 		render::text("Lengthen string", font1, { 20, 6 }, 3);
-		render::text("Move left", font1, { 20, 10 }, 3);
-		render::text("Move right", font1, { 20, 14 }, 3);
+		render::text("Push left", font1, { 20, 10 }, 3);
+		render::text("Push right", font1, { 20, 14 }, 3);
 
 		spider::draw(spider);
 
-		render::text("ver 0.1", font1, { 3, 95 }, 3);
+		render::text("ver 0.2", font1, { 3, 95 }, 3);
 	}
 
 	void end()

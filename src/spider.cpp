@@ -31,21 +31,24 @@ namespace spider
 	void updatePosition(Spider& spider, float delta)
 	{
 		spider.velocity += (-(gravity * sin(spider.angle)) / spider.stringLength) * delta;
+
 		spider.angle += spider.velocity * delta;
+
 		spider.velocity -= spider.velocity * 0.5f * delta;
+		if (spider.angle >= pi / 2 || spider.angle <= -pi / 2)
+			spider.velocity = 0;
+
 		setPosFromAngle(spider);
 	}
 
 	void pushRight(Spider& spider, float delta)
 	{
-		spider.angle = fmin(spider.angle + spider.speed * delta, pi / 2);
-		setPosFromAngle(spider);
+		spider.velocity += spider.strength / spider.stringLength  * delta;
 	}
 
 	void pushLeft(Spider& spider, float delta)
 	{
-		spider.angle = fmax(spider.angle - spider.speed * delta, -pi / 2);
-		setPosFromAngle(spider);
+		spider.velocity -= spider.strength / spider.stringLength * delta;
 	}
 
 	void lengthenString(Spider& spider, float delta)

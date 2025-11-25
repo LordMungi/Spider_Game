@@ -18,7 +18,7 @@ namespace spider
 		float velocity;
 		float acceleration;
 
-		float speed = 3.0f;
+		float strength = 200.0f;
 	};
 
 	Spider init(float radius, sf::Vector2f pivotPosition, float maxStringLength);
