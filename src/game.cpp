@@ -22,6 +22,8 @@ namespace game
 	{
 		float delta = clock.restart().asSeconds();
 
+		spider::updatePosition(spider, delta);
+
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)
 			|| sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
 			spider::pushLeft(spider, delta);

@@ -3,6 +3,7 @@
 namespace spider
 {
 	const float pi = 3.14159265359f;
+	const float gravity = 1000;
 
 	static void setPosFromAngle(Spider& spider);
 
@@ -13,7 +14,7 @@ namespace spider
 		spider.collider = sf::CircleShape(radius);
 
 		spider.pivotPosition = pivotPosition;
-		spider.angle = 0;
+		spider.angle = pi / 4;
 
 		spider.maxStringLength = maxStringLength ;
 		spider.minStringLength = maxStringLength / 10;
@@ -21,9 +22,18 @@ namespace spider
 
 		setPosFromAngle(spider);
 
-		spider.velocity = { 0,0 };
+		spider.velocity = 0;
+		spider.acceleration = 0;
 
 		return spider;
+	}
+
+	void updatePosition(Spider& spider, float delta)
+	{
+		spider.velocity += (-(gravity * sin(spider.angle)) / spider.stringLength) * delta;
+		spider.angle += spider.velocity * delta;
+		spider.velocity -= spider.velocity * 0.5f * delta;
+		setPosFromAngle(spider);
 	}
 
 	void pushRight(Spider& spider, float delta)
