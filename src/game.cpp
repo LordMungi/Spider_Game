@@ -18,6 +18,8 @@ namespace game
 
 	int enemySpawnCooldown = 1;
 
+	bool isPaused;
+
 	sf::Font font1("resource/fonts/CourierPrime-Regular.ttf");
 
 	void start()
@@ -34,61 +36,70 @@ namespace game
 	{
 		float delta = deltaClock.restart().asSeconds();
 
-		if (enemyClock.getElapsedTime().asSeconds() > enemySpawnCooldown)
+		if (!isPaused)
 		{
+
+			if (enemyClock.getElapsedTime().asSeconds() > enemySpawnCooldown)
+			{
+				for (int i = 0; i < maxEnemies; i++)
+				{
+					if (enemies[i] == nullptr)
+					{
+						enemies[i] = new enemy::Enemy(enemy::init(global::viewport, 2));
+						enemyClock.restart();
+						break;
+					}
+				}
+			}
+
 			for (int i = 0; i < maxEnemies; i++)
 			{
-				if (enemies[i] == nullptr)
+				if (enemies[i] != nullptr)
 				{
-					enemies[i] = new enemy::Enemy(enemy::init(global::viewport, 2));
-					enemyClock.restart();
-					break;
+					enemy::move(*enemies[i], delta);
+
+					if (enemies[i]->collider.getPosition().x - enemies[i]->collider.getRadius() > global::viewport.x ||
+						enemies[i]->collider.getPosition().x + enemies[i]->collider.getRadius() < 0)
+					{
+						enemy::bounceHorizontal(*enemies[i]);
+					}
+					if (enemies[i]->collider.getPosition().y - enemies[i]->collider.getRadius() > global::viewport.y ||
+						enemies[i]->collider.getPosition().y + enemies[i]->collider.getRadius() < 0)
+					{
+						enemy::bounceVertical(*enemies[i]);
+					}
+
+					if (collision::circleCircle(enemies[i]->collider, spider.collider))
+					{
+						delete enemies[i];
+						enemies[i] = nullptr;
+					}
+					else if (collision::circleLine(enemies[i]->collider, spider.collider.getPosition(), spider.pivotPosition))
+					{
+						end();
+						start();
+					}
 				}
 			}
+
+			spider::updatePosition(spider, delta);
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)
+				|| sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
+				spider::pushLeft(spider, delta);
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)
+				|| sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
+				spider::pushRight(spider, delta);
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)
+				|| sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
+				spider::shortenString(spider, delta);
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)
+				|| sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
+				spider::lengthenString(spider, delta);
 		}
-
-		for (int i = 0; i < maxEnemies; i++)
-		{
-			if (enemies[i] != nullptr)
-			{
-				enemy::move(*enemies[i], delta);
-
-				if (enemies[i]->collider.getPosition().x - enemies[i]->collider.getRadius() > global::viewport.x ||
-					enemies[i]->collider.getPosition().x + enemies[i]->collider.getRadius() < 0)
-				{
-					enemy::bounceHorizontal(*enemies[i]);
-				}
-				if	(enemies[i]->collider.getPosition().y - enemies[i]->collider.getRadius() > global::viewport.y ||
-					enemies[i]->collider.getPosition().y + enemies[i]->collider.getRadius() < 0)
-				{
-					enemy::bounceVertical(*enemies[i]);
-				}
-
-				if (collision::circleCircle(enemies[i]->collider, spider.collider))
-				{
-					delete enemies[i];
-					enemies[i] = nullptr;
-				}
-			}
-		}
-
-		spider::updatePosition(spider, delta);
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)
-			|| sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
-			spider::pushLeft(spider, delta);
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)
-			|| sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
-			spider::pushRight(spider, delta);
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)
-			|| sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
-			spider::shortenString(spider, delta);
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)
-			|| sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
-			spider::lengthenString(spider, delta);
 
 		return Screen::GAME;
 	}
