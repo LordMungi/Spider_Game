@@ -54,18 +54,16 @@ namespace game
 			{
 				enemy::move(*enemies[i], delta);
 
-				/*
-				if (enemies[i]->collider.getPosition().x + enemies[i]->collider.getRadius() > global::viewport.x ||
-					enemies[i]->collider.getPosition().x - enemies[i]->collider.getRadius() < 0)
+				if (enemies[i]->collider.getPosition().x - enemies[i]->collider.getRadius() > global::viewport.x ||
+					enemies[i]->collider.getPosition().x + enemies[i]->collider.getRadius() < 0)
 				{
 					enemy::bounceHorizontal(*enemies[i]);
 				}
-				if	(enemies[i]->collider.getPosition().y + enemies[i]->collider.getRadius() > global::viewport.y ||
-					enemies[i]->collider.getPosition().y - enemies[i]->collider.getRadius() < 0)
+				if	(enemies[i]->collider.getPosition().y - enemies[i]->collider.getRadius() > global::viewport.y ||
+					enemies[i]->collider.getPosition().y + enemies[i]->collider.getRadius() < 0)
 				{
 					enemy::bounceVertical(*enemies[i]);
 				}
-				*/
 			}
 		}
 
