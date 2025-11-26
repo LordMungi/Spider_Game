@@ -4,6 +4,13 @@
 
 namespace render
 {
+	enum class TextAlgin
+	{
+		LEFT,
+		RIGHT,
+		CENTER
+	};
+
 	void startWindow(sf::Vector2u resolution, std::string title);
 	void updateWindow();
 	void closeWindow();
@@ -18,4 +25,5 @@ namespace render
 	void circle(sf::CircleShape circle, sf::Color color);
 
 	void text(std::string text, sf::Font font, sf::Vector2f position, float size);
+	void text(std::string text, sf::Font font, sf::Vector2f position, float size, TextAlgin align);
 }

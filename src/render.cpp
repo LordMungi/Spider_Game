@@ -102,4 +102,24 @@ namespace render
 		window.draw(label);
 	}
 
+	void text(std::string text, sf::Font font, sf::Vector2f position, float size, TextAlgin align)
+	{
+		sf::Text label(font);
+		label.setString(text);
+		label.setPosition(math::getResPointFromViewport(position));
+		label.setCharacterSize(static_cast<unsigned int>(math::getResValueFromViewport(size)));
+		label.setFillColor(sf::Color::White);
+
+		switch (align)
+		{
+		case render::TextAlgin::RIGHT:
+			label.setOrigin({ label.getLocalBounds().size.x, 0 });
+			break;
+		case render::TextAlgin::CENTER:
+			label.setOrigin({ label.getLocalBounds().size.x / 2, 0 });
+			break;
+		}
+
+		window.draw(label);
+	}
 }

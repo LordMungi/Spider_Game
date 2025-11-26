@@ -34,6 +34,7 @@ namespace program
 
 	static void init()
 	{
+		srand(static_cast<unsigned int>(time(0)));
 		render::startWindow(global::resolution, "Spider game");
 	}
 

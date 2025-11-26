@@ -8,6 +8,8 @@
 
 namespace game
 {
+	static void reset();
+
 	sf::Clock deltaClock;
 	sf::Clock enemyClock;
 
@@ -18,16 +20,20 @@ namespace game
 
 	int enemySpawnCooldown = 1;
 
+	const int enemyValue = 100;
+	int score;
+
 	bool isPaused;
 
 	sf::Font font1("resource/fonts/CourierPrime-Regular.ttf");
 
 	void start()
 	{
-		srand(static_cast<unsigned int>(time(0)));
-
 		deltaClock.start();
 		enemyClock.start();
+
+		enemySpawnCooldown = 1;
+		score = 0;
 
 		spider = spider::init(5, { global::viewport.x / 2, 0}, 70);
 	}
@@ -75,6 +81,7 @@ namespace game
 						{
 							delete enemies[i];
 							enemies[i] = nullptr;
+							score += enemyValue;
 						}
 						else if (collision::circleLine(enemies[i]->collider, spider.collider.getPosition(), spider.pivotPosition))
 						{
@@ -110,8 +117,7 @@ namespace game
 
 				if (spider.deathClock.getElapsedTime().asSeconds() >= spider.respawnCooldown)
 				{
-					end();
-					start();
+					reset();
 				}
 			}
 		}
@@ -131,6 +137,8 @@ namespace game
 		render::text("Lengthen string", font1, { 20, 6 }, 3);
 		render::text("Push left", font1, { 20, 10 }, 3);
 		render::text("Push right", font1, { 20, 14 }, 3);
+
+		render::text(std::to_string(score), font1, { global::viewport.x / 2, 90 }, 7, render::TextAlgin::CENTER);
 
 		spider::draw(spider);
 
@@ -156,5 +164,19 @@ namespace game
 				enemies[i] = nullptr;
 			}
 		}
+	}
+
+	static void reset()
+	{
+		for (int i = 0; i < maxEnemies; i++)
+		{
+			if (enemies[i] != nullptr)
+			{
+				delete enemies[i];
+				enemies[i] = nullptr;
+			}
+		}
+		enemyClock.restart();
+		spider = spider::init(5, { global::viewport.x / 2, 0 }, 70);
 	}
 }
