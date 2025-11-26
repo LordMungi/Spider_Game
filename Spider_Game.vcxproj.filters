@@ -40,6 +40,9 @@
     <Filter Include="Program\Screens\Game\Enemy">
       <UniqueIdentifier>{41a952a2-b86f-414f-a700-be4a5c308463}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Program\Utilities\Collision">
+      <UniqueIdentifier>{3a591496-a879-4c54-b0fd-ec9d61ddcf90}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
@@ -63,6 +66,9 @@
     </ClCompile>
     <ClCompile Include="src\enemy.cpp">
       <Filter>Program\Screens\Game\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="src\collision.cpp">
+      <Filter>Program\Utilities\Collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -89,6 +95,9 @@
     </ClInclude>
     <ClInclude Include="src\enemy.h">
       <Filter>Program\Screens\Game\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="src\collision.h">
+      <Filter>Program\Utilities\Collision</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

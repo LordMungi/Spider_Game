@@ -4,6 +4,7 @@
 #include "enemy.h"
 
 #include "global.h"
+#include "collision.h"
 
 namespace game
 {
@@ -27,8 +28,6 @@ namespace game
 		enemyClock.start();
 
 		spider = spider::init(5, { global::viewport.x / 2, 0}, 70);
-
-
 	}
 
 	Screen update()
@@ -63,6 +62,12 @@ namespace game
 					enemies[i]->collider.getPosition().y + enemies[i]->collider.getRadius() < 0)
 				{
 					enemy::bounceVertical(*enemies[i]);
+				}
+
+				if (collision::circleCircle(enemies[i]->collider, spider.collider))
+				{
+					delete enemies[i];
+					enemies[i] = nullptr;
 				}
 			}
 		}
@@ -117,6 +122,13 @@ namespace game
 
 	void end()
 	{
-
+		for (int i = 0; i < maxEnemies; i++)
+		{
+			if (enemies[i] != nullptr)
+			{
+				delete enemies[i];
+				enemies[i] = nullptr;
+			}
+		}
 	}
 }

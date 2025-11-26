@@ -17,7 +17,7 @@ namespace spider
 		spider.angle = pi / 4;
 
 		spider.maxStringLength = maxStringLength ;
-		spider.minStringLength = maxStringLength / 10;
+		spider.minStringLength = maxStringLength / 5;
 		spider.stringLength = maxStringLength / 2;
 
 		setPosFromAngle(spider);
