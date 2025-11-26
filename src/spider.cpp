@@ -28,6 +28,8 @@ namespace spider
 		spider.state = State::IDLE;
 		spider.deathClock.reset();
 
+		spider.lives = 3;
+
 		return spider;
 	}
 
@@ -79,6 +81,7 @@ namespace spider
 		spider.deathClock.restart();
 		spider.velocity = 0;
 		spider.state = State::DEAD;
+		spider.lives--;
 	}
 
 	void fall(Spider& spider, float delta)
@@ -88,6 +91,18 @@ namespace spider
 			spider.velocity += gravity * delta;
 			spider.collider.setPosition({ spider.collider.getPosition().x, spider.collider.getPosition().y + spider.velocity * delta });
 		}
+	}
+
+	void reset(Spider& spider)
+	{
+		spider.angle = pi / 4;
+		setPosFromAngle(spider);
+
+		spider.velocity = 0;
+		spider.acceleration = 0;
+
+		spider.state = State::IDLE;
+		spider.deathClock.reset();
 	}
 
 	void draw(Spider& spider)

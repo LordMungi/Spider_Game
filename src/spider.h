@@ -13,6 +13,7 @@ namespace spider
 	{
 		sf::CircleShape collider;
 		State state;
+		int lives;
 
 		sf::Clock deathClock;
 		float fallCooldown = 0.5f;
@@ -43,6 +44,7 @@ namespace spider
 
 	void die(Spider& spider);
 	void fall(Spider& spider, float delta);
+	void reset(Spider& spider);
 
 	void draw(Spider& spider);
 

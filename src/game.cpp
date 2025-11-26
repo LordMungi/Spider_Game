@@ -19,7 +19,7 @@ namespace game
 	enemy::Enemy* enemies[maxEnemies];
 
 	float enemySpawnCooldown;
-	float enemyCooldownSpeed = 0.03f;
+	float enemyCooldownSpeed = 0.05f;
 	float enemyMinCooldown = 0.8f;
 
 	const int enemyValue = 100;
@@ -34,7 +34,7 @@ namespace game
 		deltaClock.start();
 		enemyClock.start();
 
-		enemySpawnCooldown = 3;
+		enemySpawnCooldown = 2.5;
 		score = 0;
 
 		spider = spider::init(5, { global::viewport.x / 2, 0}, 70);
@@ -120,7 +120,13 @@ namespace game
 
 				if (spider.deathClock.getElapsedTime().asSeconds() >= spider.respawnCooldown)
 				{
-					reset();
+					if (spider.lives <= 0)
+					{
+						end();
+						start();
+					}
+					else
+						reset();
 				}
 			}
 		}
@@ -130,7 +136,7 @@ namespace game
 
 	void draw()
 	{
-
+		/*
 		render::text("W/Up", font1, { 3, 2 }, 3);
 		render::text("S/Down", font1, { 3, 6 }, 3);
 		render::text("A/Left", font1, { 3, 10 }, 3);
@@ -140,8 +146,16 @@ namespace game
 		render::text("Lengthen string", font1, { 20, 6 }, 3);
 		render::text("Push left", font1, { 20, 10 }, 3);
 		render::text("Push right", font1, { 20, 14 }, 3);
+		*/
 
 		render::text(std::to_string(score), font1, { global::viewport.x / 2, 90 }, 7, render::TextAlgin::CENTER);
+
+		float livesPosX = 3;
+		for (int i = 0; i < spider.lives; i++)
+		{
+			render::text("<3", font1, { livesPosX, 2 }, 7);
+			livesPosX += 9;
+		}
 
 		spider::draw(spider);
 
@@ -180,6 +194,6 @@ namespace game
 			}
 		}
 		enemyClock.restart();
-		spider = spider::init(5, { global::viewport.x / 2, 0 }, 70);
+		spider::reset(spider);
 	}
 }
