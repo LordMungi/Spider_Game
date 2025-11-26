@@ -143,7 +143,7 @@ namespace game
 			}
 		}
 
-		render::text("ver 0.2", font1, { 3, 95 }, 3);
+		render::text("ver 0.3", font1, { 3, 95 }, 3);
 	}
 
 	void end()
