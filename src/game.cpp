@@ -8,7 +8,19 @@
 
 namespace game
 {
+	enum class State
+	{
+		RUNNING,
+		STANDBY,
+		PAUSED,
+	};
+
+
 	static void reset();
+
+	static void updatePlayer(float delta);
+	static void spawnEnemies(float delta);
+	static void updateEnemies(float delta);
 
 	sf::Clock deltaClock;
 	sf::Clock enemyClock;
@@ -25,7 +37,7 @@ namespace game
 	const int enemyValue = 100;
 	int score;
 
-	bool isPaused;
+	State gamestate;
 
 	sf::Font font1("resource/fonts/CourierPrime-Regular.ttf");
 
@@ -37,6 +49,8 @@ namespace game
 		enemySpawnCooldown = 2.5;
 		score = 0;
 
+		gamestate = State::STANDBY;
+
 		spider = spider::init(5, { global::viewport.x / 2, 0}, 70);
 	}
 
@@ -44,91 +58,22 @@ namespace game
 	{
 		float delta = deltaClock.restart().asSeconds();
 
-		if (!isPaused)
+
+		switch (gamestate)
 		{
-			enemySpawnCooldown = fmaxf(enemySpawnCooldown - enemyCooldownSpeed * delta, enemyMinCooldown);
+		case State::RUNNING:
+		{
+			spawnEnemies(delta);
+			updateEnemies(delta);
+		}
+		case State::STANDBY:
+		{
+			updatePlayer(delta);
+			break;
+		}
 
-			if (enemyClock.getElapsedTime().asSeconds() > enemySpawnCooldown)
-			{
-				for (int i = 0; i < maxEnemies; i++)
-				{
-					if (enemies[i] == nullptr)
-					{
-						enemies[i] = new enemy::Enemy(enemy::init(global::viewport, 2));
-						enemyClock.restart();
-						break;
-					}
-				}
-			}
-
-			for (int i = 0; i < maxEnemies; i++)
-			{
-				if (enemies[i] != nullptr)
-				{
-					enemy::move(*enemies[i], delta);
-
-					if (enemies[i]->collider.getPosition().x - enemies[i]->collider.getRadius() > global::viewport.x ||
-						enemies[i]->collider.getPosition().x + enemies[i]->collider.getRadius() < 0)
-					{
-						enemy::bounceHorizontal(*enemies[i]);
-					}
-					if (enemies[i]->collider.getPosition().y - enemies[i]->collider.getRadius() > global::viewport.y ||
-						enemies[i]->collider.getPosition().y + enemies[i]->collider.getRadius() < 0)
-					{
-						enemy::bounceVertical(*enemies[i]);
-					}
-
-					if (spider.state != spider::State::DEAD)
-					{
-						if (collision::circleCircle(enemies[i]->collider, spider.collider))
-						{
-							delete enemies[i];
-							enemies[i] = nullptr;
-							score += enemyValue;
-						}
-						else if (collision::circleLine(enemies[i]->collider, spider.collider.getPosition(), spider.pivotPosition))
-						{
-							spider::die(spider);
-						}
-					}
-				}
-			}
-
-			if (spider.state != spider::State::DEAD)
-			{
-				spider::updatePosition(spider, delta);
-
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)
-					|| sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
-					spider::pushLeft(spider, delta);
-
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)
-					|| sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
-					spider::pushRight(spider, delta);
-
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)
-					|| sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
-					spider::shortenString(spider, delta);
-
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)
-					|| sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
-					spider::lengthenString(spider, delta);
-			}
-			else
-			{
-				spider::fall(spider, delta);
-
-				if (spider.deathClock.getElapsedTime().asSeconds() >= spider.respawnCooldown)
-				{
-					if (spider.lives <= 0)
-					{
-						end();
-						start();
-					}
-					else
-						reset();
-				}
-			}
+		case State::PAUSED:
+			break;
 		}
 
 		return Screen::GAME;
@@ -136,36 +81,45 @@ namespace game
 
 	void draw()
 	{
-		/*
-		render::text("W/Up", font1, { 3, 2 }, 3);
-		render::text("S/Down", font1, { 3, 6 }, 3);
-		render::text("A/Left", font1, { 3, 10 }, 3);
-		render::text("D/Right", font1, { 3, 14 }, 3);
-
-		render::text("Shorten string", font1, { 20, 2 }, 3);
-		render::text("Lengthen string", font1, { 20, 6 }, 3);
-		render::text("Push left", font1, { 20, 10 }, 3);
-		render::text("Push right", font1, { 20, 14 }, 3);
-		*/
-
-		render::text(std::to_string(score), font1, { global::viewport.x / 2, 90 }, 7, render::TextAlgin::CENTER);
-
-		float livesPosX = 3;
-		for (int i = 0; i < spider.lives; i++)
+		switch (gamestate)
 		{
-			render::text("<3", font1, { livesPosX, 2 }, 7);
-			livesPosX += 9;
+		case State::STANDBY:
+		{
+			render::text("W/Up", font1, { 3, 2 }, 3);
+			render::text("S/Down", font1, { 3, 6 }, 3);
+			render::text("A/Left", font1, { 3, 10 }, 3);
+			render::text("D/Right", font1, { 3, 14 }, 3);
+
+			render::text("Shorten string", font1, { 20, 2 }, 3);
+			render::text("Lengthen string", font1, { 20, 6 }, 3);
+			render::text("Push left", font1, { 20, 10 }, 3);
+			render::text("Push right", font1, { 20, 14 }, 3);
+
+			render::text("SPACE to start", font1, {global::viewport.x / 2, 90}, 7, render::TextAlgin::CENTER);
+			break;
+		}
+		case State::RUNNING:
+		{
+			render::text(std::to_string(score), font1, { global::viewport.x / 2, 90 }, 7, render::TextAlgin::CENTER);
+			float livesPosX = 3;
+			for (int i = 0; i < spider.lives; i++)
+			{
+				render::text("<3", font1, { livesPosX, 2 }, 7);
+				livesPosX += 9;
+			}
+			break;
+		}
+		case State::PAUSED:
+		default:
+			break;
 		}
 
 		spider::draw(spider);
 
-
 		for (int i = 0; i < maxEnemies; i++)
 		{
 			if (enemies[i] != nullptr)
-			{
 				enemy::draw(*enemies[i]);
-			}
 		}
 
 		render::text("ver 0.3", font1, { 3, 95 }, 3);
@@ -195,5 +149,99 @@ namespace game
 		}
 		enemyClock.restart();
 		spider::reset(spider);
+	}
+
+	static void updatePlayer(float delta)
+	{
+		if (spider.state != spider::State::DEAD)
+		{
+			spider::updatePosition(spider, delta);
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)
+				|| sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
+				spider::pushLeft(spider, delta);
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)
+				|| sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
+				spider::pushRight(spider, delta);
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)
+				|| sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
+				spider::shortenString(spider, delta);
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)
+				|| sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
+				spider::lengthenString(spider, delta);
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
+				gamestate = State::RUNNING;
+
+		}
+		else
+		{
+			spider::fall(spider, delta);
+			if (spider.deathClock.getElapsedTime().asSeconds() >= spider.respawnCooldown)
+			{
+				if (spider.lives <= 0)
+				{
+					end();
+					start();
+				}
+				else
+					reset();
+			}
+		}
+	}
+	static void spawnEnemies(float delta)
+	{
+		enemySpawnCooldown = fmaxf(enemySpawnCooldown - enemyCooldownSpeed * delta, enemyMinCooldown);
+		if (enemyClock.getElapsedTime().asSeconds() > enemySpawnCooldown)
+		{
+			for (int i = 0; i < maxEnemies; i++)
+			{
+				if (enemies[i] == nullptr)
+				{
+					enemies[i] = new enemy::Enemy(enemy::init(global::viewport, 2));
+					enemyClock.restart();
+					break;
+				}
+			}
+		}
+	}
+	static void updateEnemies(float delta)
+	{
+		for (int i = 0; i < maxEnemies; i++)
+		{
+			if (enemies[i] != nullptr)
+			{
+				enemy::move(*enemies[i], delta);
+
+				if (enemies[i]->collider.getPosition().x - enemies[i]->collider.getRadius() > global::viewport.x ||
+					enemies[i]->collider.getPosition().x + enemies[i]->collider.getRadius() < 0)
+				{
+					enemy::bounceHorizontal(*enemies[i]);
+				}
+				if (enemies[i]->collider.getPosition().y - enemies[i]->collider.getRadius() > global::viewport.y ||
+					enemies[i]->collider.getPosition().y + enemies[i]->collider.getRadius() < 0)
+				{
+					enemy::bounceVertical(*enemies[i]);
+				}
+
+				if (spider.state != spider::State::DEAD)
+				{
+					if (collision::circleCircle(enemies[i]->collider, spider.collider))
+					{
+						delete enemies[i];
+						enemies[i] = nullptr;
+						score += enemyValue;
+					}
+					else if (collision::circleLine(enemies[i]->collider, spider.collider.getPosition(), spider.pivotPosition))
+					{
+						spider::die(spider);
+					}
+				}
+			}
+		}
+
 	}
 }
