@@ -3,9 +3,20 @@
 
 namespace spider
 {
+	enum class State
+	{
+		IDLE,
+		DEAD,
+	};
+
 	struct Spider
 	{
 		sf::CircleShape collider;
+		State state;
+
+		sf::Clock deathClock;
+		float fallCooldown = 0.5f;
+		float respawnCooldown = 2.0f;
 
 		sf::Vector2f pivotPosition;
 		float angle;
@@ -29,6 +40,9 @@ namespace spider
 	void pushLeft(Spider& spider, float delta);
 	void lengthenString(Spider& spider, float delta);
 	void shortenString(Spider& spider, float delta);
+
+	void die(Spider& spider);
+	void fall(Spider& spider, float delta);
 
 	void draw(Spider& spider);
 

@@ -69,36 +69,51 @@ namespace game
 						enemy::bounceVertical(*enemies[i]);
 					}
 
-					if (collision::circleCircle(enemies[i]->collider, spider.collider))
+					if (spider.state != spider::State::DEAD)
 					{
-						delete enemies[i];
-						enemies[i] = nullptr;
-					}
-					else if (collision::circleLine(enemies[i]->collider, spider.collider.getPosition(), spider.pivotPosition))
-					{
-						end();
-						start();
+						if (collision::circleCircle(enemies[i]->collider, spider.collider))
+						{
+							delete enemies[i];
+							enemies[i] = nullptr;
+						}
+						else if (collision::circleLine(enemies[i]->collider, spider.collider.getPosition(), spider.pivotPosition))
+						{
+							spider::die(spider);
+						}
 					}
 				}
 			}
 
-			spider::updatePosition(spider, delta);
+			if (spider.state != spider::State::DEAD)
+			{
+				spider::updatePosition(spider, delta);
 
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)
-				|| sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
-				spider::pushLeft(spider, delta);
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)
+					|| sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
+					spider::pushLeft(spider, delta);
 
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)
-				|| sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
-				spider::pushRight(spider, delta);
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)
+					|| sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
+					spider::pushRight(spider, delta);
 
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)
-				|| sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
-				spider::shortenString(spider, delta);
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)
+					|| sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
+					spider::shortenString(spider, delta);
 
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)
-				|| sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
-				spider::lengthenString(spider, delta);
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)
+					|| sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
+					spider::lengthenString(spider, delta);
+			}
+			else
+			{
+				spider::fall(spider, delta);
+
+				if (spider.deathClock.getElapsedTime().asSeconds() >= spider.respawnCooldown)
+				{
+					end();
+					start();
+				}
+			}
 		}
 
 		return Screen::GAME;

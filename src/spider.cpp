@@ -3,7 +3,7 @@
 namespace spider
 {
 	const float pi = 3.14159265359f;
-	const float gravity = 1000;
+	const float gravity = 1000.0f;
 
 	static void setPosFromAngle(Spider& spider);
 
@@ -24,6 +24,9 @@ namespace spider
 
 		spider.velocity = 0;
 		spider.acceleration = 0;
+
+		spider.state = State::IDLE;
+		spider.deathClock.reset();
 
 		return spider;
 	}
@@ -71,9 +74,26 @@ namespace spider
 		setPosFromAngle(spider);
 	}
 
+	void die(Spider& spider)
+	{
+		spider.deathClock.restart();
+		spider.velocity = 0;
+		spider.state = State::DEAD;
+	}
+
+	void fall(Spider& spider, float delta)
+	{
+		if (spider.deathClock.getElapsedTime().asSeconds() >= spider.fallCooldown)
+		{
+			spider.velocity += gravity * delta;
+			spider.collider.setPosition({ spider.collider.getPosition().x, spider.collider.getPosition().y + spider.velocity * delta });
+		}
+	}
+
 	void draw(Spider& spider)
 	{
-		render::line(spider.pivotPosition, spider.collider.getPosition(), 1, sf::Color::White);
+		if(spider.state != State::DEAD)
+			render::line(spider.pivotPosition, spider.collider.getPosition(), 1, sf::Color::White);
 		render::circle(spider.pivotPosition, 2, sf::Color::Red);
 		render::circle(spider.collider, sf::Color::Green);
 	}
