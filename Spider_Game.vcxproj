@@ -171,6 +171,7 @@
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\enemy.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\global.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -180,6 +181,7 @@
     <ClCompile Include="src\spider.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\enemy.h" />
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\global.h" />
     <ClInclude Include="src\math.h" />

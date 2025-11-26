@@ -37,6 +37,9 @@
     <Filter Include="Program\Utilities\Math">
       <UniqueIdentifier>{be8bf48a-a8d4-45dd-bf34-888cc7ee19a3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Program\Screens\Game\Enemy">
+      <UniqueIdentifier>{41a952a2-b86f-414f-a700-be4a5c308463}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
@@ -57,6 +60,9 @@
     </ClCompile>
     <ClCompile Include="src\math.cpp">
       <Filter>Program\Utilities\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\enemy.cpp">
+      <Filter>Program\Screens\Game\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -80,6 +86,9 @@
     </ClInclude>
     <ClInclude Include="src\math.h">
       <Filter>Program\Utilities\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\enemy.h">
+      <Filter>Program\Screens\Game\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
