@@ -27,12 +27,11 @@ namespace enemy
 		}
 		enemy.collider.setPosition(position);
 
-		enemy.direction.x = gameBorders.x / 2 - position.x;
-		enemy.direction.y = gameBorders.y / 2 - position.y;
+		enemy.direction.x = rand() % static_cast<int>(gameBorders.x / 2) + gameBorders.x / 4 - position.x;
+		enemy.direction.y = rand() % static_cast<int>(gameBorders.y / 2) + gameBorders.y / 4 - position.y;
 		enemy.direction /= sqrt(enemy.direction.x * enemy.direction.x + enemy.direction.y * enemy.direction.y);
 
 		enemy.speed = 30;
-		//enemy.speed = static_cast<float>(rand() % 50);
 
 		return enemy;
 
