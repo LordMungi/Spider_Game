@@ -18,7 +18,9 @@ namespace game
 	spider::Spider spider;
 	enemy::Enemy* enemies[maxEnemies];
 
-	int enemySpawnCooldown = 1;
+	float enemySpawnCooldown;
+	float enemyCooldownSpeed = 0.03f;
+	float enemyMinCooldown = 0.8f;
 
 	const int enemyValue = 100;
 	int score;
@@ -32,7 +34,7 @@ namespace game
 		deltaClock.start();
 		enemyClock.start();
 
-		enemySpawnCooldown = 1;
+		enemySpawnCooldown = 3;
 		score = 0;
 
 		spider = spider::init(5, { global::viewport.x / 2, 0}, 70);
@@ -44,6 +46,7 @@ namespace game
 
 		if (!isPaused)
 		{
+			enemySpawnCooldown = fmaxf(enemySpawnCooldown - enemyCooldownSpeed * delta, enemyMinCooldown);
 
 			if (enemyClock.getElapsedTime().asSeconds() > enemySpawnCooldown)
 			{
