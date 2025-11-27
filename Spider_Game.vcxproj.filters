@@ -43,6 +43,15 @@
     <Filter Include="Program\Utilities\Collision">
       <UniqueIdentifier>{3a591496-a879-4c54-b0fd-ec9d61ddcf90}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Program\Elements">
+      <UniqueIdentifier>{f67be5a1-f9b7-4a80-88fd-ef5d56d15c53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Elements\Button">
+      <UniqueIdentifier>{a25ef743-71f1-484b-8f8c-e5351310d577}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Screens\Menu">
+      <UniqueIdentifier>{f0984e2a-b5af-4709-8cce-fe4349b21bab}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
@@ -69,6 +78,12 @@
     </ClCompile>
     <ClCompile Include="src\collision.cpp">
       <Filter>Program\Utilities\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="src\button.cpp">
+      <Filter>Program\Elements\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="src\menu.cpp">
+      <Filter>Program\Screens\Menu</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -98,6 +113,12 @@
     </ClInclude>
     <ClInclude Include="src\collision.h">
       <Filter>Program\Utilities\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="src\button.h">
+      <Filter>Program\Elements\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="src\menu.h">
+      <Filter>Program\Screens\Menu</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

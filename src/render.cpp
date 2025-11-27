@@ -27,7 +27,7 @@ namespace render
 			if (event->is<sf::Event::Closed>())
 				closeWindow();
 		}
-
+		global::mousePosition = math::getViewportPointFromRes(sf::Mouse::getPosition(window));
 	}
 
 	void closeWindow()
@@ -90,6 +90,18 @@ namespace render
 		window.draw(shape);
 	}
 
+	void rectangle(sf::RectangleShape rectangle, sf::Color color)
+	{
+		sf::RectangleShape shape;
+
+		shape.setSize(math::getResPointFromViewport(rectangle.getSize()));
+		shape.setPosition(math::getResPointFromViewport(rectangle.getPosition()));
+		shape.setOrigin({ math::getResValueFromViewport(rectangle.getSize().x / 2), math::getResValueFromViewport(rectangle.getSize().y / 2) });
+
+		shape.setFillColor(color);
+		window.draw(shape);
+	}
+
 	void text(std::string text, sf::Font font, sf::Vector2f position, float size)
 	{
 		sf::Text label(font);
@@ -98,6 +110,8 @@ namespace render
 		label.setPosition(math::getResPointFromViewport(position));
 		label.setCharacterSize(static_cast<unsigned int>(math::getResValueFromViewport(size)));
 		label.setFillColor(sf::Color::White);
+
+		label.setOrigin({ 0, math::getViewportValueFromRes(label.getCharacterSize()) / 2 });
 
 		window.draw(label);
 	}
@@ -113,10 +127,31 @@ namespace render
 		switch (align)
 		{
 		case render::TextAlgin::RIGHT:
-			label.setOrigin({ label.getLocalBounds().size.x, 0 });
+			label.setOrigin({ label.getLocalBounds().size.x, label.getOrigin().y});
 			break;
 		case render::TextAlgin::CENTER:
-			label.setOrigin({ label.getLocalBounds().size.x / 2, 0 });
+			label.setOrigin({ label.getLocalBounds().size.x / 2, label.getOrigin().y });
+			break;
+		}
+
+		window.draw(label);
+	}
+
+	void text(std::string text, sf::Font font, sf::Vector2f position, float size, TextAlgin align, sf::Color color)
+	{
+		sf::Text label(font);
+		label.setString(text);
+		label.setPosition(math::getResPointFromViewport(position));
+		label.setCharacterSize(static_cast<unsigned int>(math::getResValueFromViewport(size)));
+		label.setFillColor(color);
+
+		switch (align)
+		{
+		case render::TextAlgin::RIGHT:
+			label.setOrigin({ label.getLocalBounds().size.x, label.getOrigin().y });
+			break;
+		case render::TextAlgin::CENTER:
+			label.setOrigin({ label.getLocalBounds().size.x / 2, label.getOrigin().y });
 			break;
 		}
 

@@ -4,6 +4,7 @@
 #include "render.h"
 
 #include "game.h"
+#include "menu.h"
 
 namespace program
 {
@@ -13,7 +14,7 @@ namespace program
 	static void switchScreen();
 	static void close();
 
-	Screen currentScreen = Screen::GAME;
+	Screen currentScreen = Screen::MENU;
 	Screen previousScreen = Screen::EXIT;
 
 	bool isRunning = true;
@@ -47,6 +48,9 @@ namespace program
 		case Screen::GAME:
 			currentScreen = game::update();
 			break;
+		case Screen::MENU:
+			currentScreen = menu::update();
+			break;
 		case Screen::EXIT:
 			isRunning = false;
 			break;
@@ -61,6 +65,9 @@ namespace program
 		{
 		case Screen::GAME:
 			game::draw();
+			break;
+		case Screen::MENU:
+			menu::draw();
 			break;
 		}
 
@@ -82,6 +89,9 @@ namespace program
 			{
 			case Screen::GAME:
 				game::start();
+				break;
+			case Screen::MENU:
+				menu::init();
 				break;
 			}
 		}

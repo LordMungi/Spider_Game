@@ -16,11 +16,16 @@ namespace math
 		return vpValue * global::resolution.y / global::viewport.y;
 	}
 
-	sf::Vector2f getViewportPointFromRes(sf::Vector2u resPoint)
+	sf::Vector2f getViewportPointFromRes(sf::Vector2i resPoint)
 	{
 		sf::Vector2f vpPoint;
 		vpPoint.x = resPoint.x * global::viewport.x / global::resolution.x;
 		vpPoint.y = resPoint.y * global::viewport.y / global::resolution.y;
 		return vpPoint;
+	}
+
+	float getViewportValueFromRes(unsigned int resValue)
+	{
+		return resValue * global::viewport.y / global::resolution.y;
 	}
 }

@@ -4,6 +4,8 @@
 
 namespace global
 {
+	extern sf::Vector2f mousePosition;
+	
 	extern sf::Vector2u resolution;
 	extern sf::Vector2f viewport;
 }

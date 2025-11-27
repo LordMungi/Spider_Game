@@ -24,6 +24,9 @@ namespace render
 	void circle(sf::Vector2f position, float radius, sf::Color color);
 	void circle(sf::CircleShape circle, sf::Color color);
 
+	void rectangle(sf::RectangleShape rectangle, sf::Color color);
+
 	void text(std::string text, sf::Font font, sf::Vector2f position, float size);
 	void text(std::string text, sf::Font font, sf::Vector2f position, float size, TextAlgin align);
+	void text(std::string text, sf::Font font, sf::Vector2f position, float size, TextAlgin align, sf::Color color);
 }

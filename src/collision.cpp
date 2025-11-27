@@ -65,5 +65,13 @@ namespace collision
 
 		return distVector <= radius * radius;
 	}
+
+	bool pointRectangle(sf::Vector2f point, sf::RectangleShape rectangle)
+	{
+		return point.x <= rectangle.getPosition().x + rectangle.getSize().x / 2 &&
+			point.x >= rectangle.getPosition().x - rectangle.getSize().x / 2 &&
+			point.y <= rectangle.getPosition().y + rectangle.getSize().y / 2 &&
+			point.y >= rectangle.getPosition().y - rectangle.getSize().y / 2;
+	}
 }
 

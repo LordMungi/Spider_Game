@@ -2,6 +2,7 @@
 
 enum class Screen
 {
+	MENU,
 	GAME,
 	EXIT
 };
