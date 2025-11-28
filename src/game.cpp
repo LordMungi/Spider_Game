@@ -14,6 +14,7 @@ namespace game
 		RUNNING,
 		STANDBY,
 		PAUSED,
+		OVER
 	};
 
 
@@ -82,6 +83,7 @@ namespace game
 			updateEnemies(delta);
 		}
 		case State::STANDBY:
+		case State::OVER:
 		{
 			updatePlayer(delta);
 			break;
@@ -115,6 +117,10 @@ namespace game
 			render::text("SPACE to start", font1, { global::viewport.x / 2, 90 }, 7, render::TextAlgin::CENTER);
 			break;
 		}
+		case State::OVER:
+			render::text("GAME OVER", font1, { global::viewport.x / 2, 10 }, 7, render::TextAlgin::CENTER);
+			render::text("SPACE to restart", font1, { global::viewport.x / 2, 20 }, 7, render::TextAlgin::CENTER);
+
 		case State::RUNNING:
 		case State::PAUSED:
 		{
@@ -194,7 +200,11 @@ namespace game
 				spider::lengthenString(spider, delta);
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
+			{
+				if (gamestate == State::OVER)
+					start();
 				gamestate = State::RUNNING;
+			}
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
 			{
@@ -212,8 +222,8 @@ namespace game
 			{
 				if (spider.lives <= 0)
 				{
-					end();
-					start();
+					reset();
+					gamestate = State::OVER;
 				}
 				else
 					reset();
