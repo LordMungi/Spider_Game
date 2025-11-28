@@ -10,7 +10,7 @@ namespace credits
 	const int maxButtons = 1;
 	button::Button buttons[maxButtons];
 
-	sf::Font font1("resource/fonts/CourierPrime-Regular.ttf");
+	sf::Font font1("resource/fonts/AnticDidone-Regular.otf");
 
 	Screen nextScreen;
 
@@ -47,6 +47,6 @@ namespace credits
 		render::text("Programming", font1, { middleX - 30, 30 }, 5, render::TextAlgin::CENTER);
 		render::text("Santino Verrua", font1, { middleX + 30, 30 }, 5, render::TextAlgin::CENTER);
 
-		render::text("ver 0.4", font1, { 3, 95 }, 3);
+		render::text("ver 1.0", font1, { 3, 95 }, 3);
 	}
 }

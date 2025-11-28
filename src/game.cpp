@@ -45,7 +45,7 @@ namespace game
 	const int maxButtons = 2;
 	button::Button buttons[maxButtons];
 
-	sf::Font font1("resource/fonts/CourierPrime-Regular.ttf");
+	sf::Font font1("resource/fonts/AnticDidone-Regular.otf");
 
 	void start()
 	{
@@ -108,11 +108,13 @@ namespace game
 			render::text("S/Down", font1, { 3, 6 }, 3);
 			render::text("A/Left", font1, { 3, 10 }, 3);
 			render::text("D/Right", font1, { 3, 14 }, 3);
+			render::text("ESC", font1, { 3, 18 }, 3);
 
 			render::text("Shorten string", font1, { 20, 2 }, 3);
 			render::text("Lengthen string", font1, { 20, 6 }, 3);
 			render::text("Push left", font1, { 20, 10 }, 3);
 			render::text("Push right", font1, { 20, 14 }, 3);
+			render::text("Pause", font1, { 20, 18 }, 3);
 
 			render::text("SPACE to start", font1, { global::viewport.x / 2, 90 }, 7, render::TextAlgin::CENTER);
 			break;

@@ -9,7 +9,8 @@ namespace menu
 	const int maxButtons = 3;
 	button::Button buttons[maxButtons];
 
-	sf::Font font1("resource/fonts/CourierPrime-Regular.ttf");
+	sf::Font font1("resource/fonts/AnticDidone-Regular.otf");
+	sf::Font font2("resource/fonts/Archistico_Bold.ttf");
 
 	Screen nextScreen;
 
@@ -41,10 +42,11 @@ namespace menu
 
 	void draw()
 	{
+		render::text("Web Cleaner", font2, { global::viewport.x / 2, 20 }, 15, render::TextAlgin::CENTER);
 		for (int i = 0; i < maxButtons; i++)
 		{
 			button::draw(buttons[i], font1);
 		}
-		render::text("ver 0.4", font1, { 3, 95 }, 3);
+		render::text("ver 1.0", font1, { 3, 95 }, 3);
 	}
 }
