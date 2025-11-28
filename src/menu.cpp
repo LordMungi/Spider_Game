@@ -45,5 +45,6 @@ namespace menu
 		{
 			button::draw(buttons[i], font1);
 		}
+		render::text("ver 0.4", font1, { 3, 95 }, 3);
 	}
 }

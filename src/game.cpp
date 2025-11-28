@@ -5,6 +5,7 @@
 
 #include "global.h"
 #include "collision.h"
+#include "button.h"
 
 namespace game
 {
@@ -38,6 +39,10 @@ namespace game
 	int score;
 
 	State gamestate;
+	Screen nextScreen;
+
+	const int maxButtons = 2;
+	button::Button buttons[maxButtons];
 
 	sf::Font font1("resource/fonts/CourierPrime-Regular.ttf");
 
@@ -51,7 +56,17 @@ namespace game
 
 		gamestate = State::STANDBY;
 
+		sf::Vector2f buttonPos = { global::viewport.x / 2, 40 };
+		sf::Vector2f buttonSize = { 50, 10 };
+		float buttonSeparation = 13;
+
+		buttons[0] = button::init(buttonPos, buttonSize, "RESUME", [&]() { gamestate = State::RUNNING; });
+		buttonPos.y += buttonSeparation;
+		buttons[1] = button::init(buttonPos, buttonSize, "EXIT", [&]() { nextScreen = Screen::MENU; });
+
 		spider = spider::init(5, { global::viewport.x / 2, 0}, 70);
+
+		nextScreen = Screen::GAME;
 	}
 
 	Screen update()
@@ -73,10 +88,12 @@ namespace game
 		}
 
 		case State::PAUSED:
+			for (int i = 0; i < maxButtons; i++)
+				button::update(buttons[i]);
 			break;
 		}
 
-		return Screen::GAME;
+		return nextScreen;
 	}
 
 	void draw()
@@ -95,10 +112,11 @@ namespace game
 			render::text("Push left", font1, { 20, 10 }, 3);
 			render::text("Push right", font1, { 20, 14 }, 3);
 
-			render::text("SPACE to start", font1, {global::viewport.x / 2, 90}, 7, render::TextAlgin::CENTER);
+			render::text("SPACE to start", font1, { global::viewport.x / 2, 90 }, 7, render::TextAlgin::CENTER);
 			break;
 		}
 		case State::RUNNING:
+		case State::PAUSED:
 		{
 			render::text(std::to_string(score), font1, { global::viewport.x / 2, 90 }, 7, render::TextAlgin::CENTER);
 			float livesPosX = 3;
@@ -109,9 +127,6 @@ namespace game
 			}
 			break;
 		}
-		case State::PAUSED:
-		default:
-			break;
 		}
 
 		spider::draw(spider);
@@ -122,7 +137,12 @@ namespace game
 				enemy::draw(*enemies[i]);
 		}
 
-		render::text("ver 0.3", font1, { 3, 95 }, 3);
+		if (gamestate == State::PAUSED)
+		{
+			for (int i = 0; i < maxButtons; i++)
+				button::draw(buttons[i], font1);
+		}
+
 	}
 
 	void end()
@@ -175,6 +195,14 @@ namespace game
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
 				gamestate = State::RUNNING;
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
+			{
+				if (gamestate == State::RUNNING)
+					gamestate = State::PAUSED;
+				else
+					gamestate = State::RUNNING;
+			}
 
 		}
 		else

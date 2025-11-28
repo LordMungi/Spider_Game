@@ -47,5 +47,6 @@ namespace credits
 		render::text("Programming", font1, { middleX - 30, 30 }, 5, render::TextAlgin::CENTER);
 		render::text("Santino Verrua", font1, { middleX + 30, 30 }, 5, render::TextAlgin::CENTER);
 
+		render::text("ver 0.4", font1, { 3, 95 }, 3);
 	}
 }
