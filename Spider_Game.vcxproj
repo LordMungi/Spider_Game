@@ -173,6 +173,7 @@
   <ItemGroup>
     <ClCompile Include="src\button.cpp" />
     <ClCompile Include="src\collision.cpp" />
+    <ClCompile Include="src\credits.cpp" />
     <ClCompile Include="src\enemy.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\global.cpp" />
@@ -186,6 +187,7 @@
   <ItemGroup>
     <ClInclude Include="src\button.h" />
     <ClInclude Include="src\collision.h" />
+    <ClInclude Include="src\credits.h" />
     <ClInclude Include="src\enemy.h" />
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\global.h" />

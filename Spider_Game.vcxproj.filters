@@ -52,6 +52,9 @@
     <Filter Include="Program\Screens\Menu">
       <UniqueIdentifier>{f0984e2a-b5af-4709-8cce-fe4349b21bab}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Program\Screens\Credits">
+      <UniqueIdentifier>{98ec86fe-a83e-4cd2-82f7-d46d1b291407}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
@@ -84,6 +87,9 @@
     </ClCompile>
     <ClCompile Include="src\menu.cpp">
       <Filter>Program\Screens\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="src\credits.cpp">
+      <Filter>Program\Screens\Credits</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -119,6 +125,9 @@
     </ClInclude>
     <ClInclude Include="src\menu.h">
       <Filter>Program\Screens\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="src\credits.h">
+      <Filter>Program\Screens\Credits</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

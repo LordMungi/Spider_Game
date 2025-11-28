@@ -6,7 +6,7 @@
 
 namespace menu
 {
-	const int maxButtons = 1;
+	const int maxButtons = 3;
 	button::Button buttons[maxButtons];
 
 	sf::Font font1("resource/fonts/CourierPrime-Regular.ttf");
@@ -19,10 +19,13 @@ namespace menu
 
 		sf::Vector2f buttonPos = { global::viewport.x / 2, 50 };
 		sf::Vector2f buttonSize = { 50, 10 };
-		float buttonSeparation = 20;
+		float buttonSeparation = 13;
 
 		buttons[0] = button::init(buttonPos, buttonSize, "PLAY", [&]() { nextScreen = Screen::GAME; });
 		buttonPos.y += buttonSeparation;
+		buttons[1] = button::init(buttonPos, buttonSize, "CREDITS", [&]() { nextScreen = Screen::CREDITS; });
+		buttonPos.y += buttonSeparation;
+		buttons[2] = button::init(buttonPos, buttonSize, "EXIT", [&]() { nextScreen = Screen::EXIT; });
 
 	}
 

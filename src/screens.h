@@ -4,5 +4,6 @@ enum class Screen
 {
 	MENU,
 	GAME,
+	CREDITS,
 	EXIT
 };
